@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<title>行者 · 徒步计划与装备管理</title>
+<meta name="description" content="记录徒步计划、管理装备与打包清单的本地应用">
+<meta name="theme-color" content="#3d7a52">
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+<link rel="apple-touch-icon" href="icons/icon.svg">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="行者">
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="app">
+  <!-- 侧边栏（桌面端） -->
+  <aside class="sidebar">
+    <div class="brand" id="brand">
+      <div class="brand-mark">山</div>
+      <div class="brand-text">
+        <div class="brand-name">行者</div>
+        <div class="brand-sub">徒步 · 装备管家</div>
+      </div>
+    </div>
+
+    <nav class="nav" id="nav">
+      <a class="nav-item" href="#/dashboard" data-route="dashboard">
+        <span class="nav-icon">◎</span><span>总览</span>
+      </a>
+      <a class="nav-item" href="#/plans" data-route="plans">
+        <span class="nav-icon">▲</span><span>徒步计划</span>
+      </a>
+      <a class="nav-item" href="#/gear" data-route="gear">
+        <span class="nav-icon">⬢</span><span>装备库</span>
+      </a>
+      <a class="nav-item" href="#/packing" data-route="packing">
+        <span class="nav-icon">▤</span><span>打包清单</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-foot">
+      <button class="btn btn-ghost btn-block" id="btn-export">导出备份</button>
+      <button class="btn btn-ghost btn-block" id="btn-import">导入数据</button>
+      <input type="file" id="file-import" accept="application/json,.json" hidden>
+      <button class="btn btn-ghost btn-block" id="btn-reset" style="color:var(--text-3)">清空重置</button>
+    </div>
+  </aside>
+
+  <!-- 主内容 -->
+  <div class="content-col">
+    <header class="topbar">
+      <h1 class="page-title" id="page-title">总览</h1>
+      <div class="topbar-actions">
+        <!-- 移动端更多菜单 -->
+        <div class="topbar-more" id="topbar-more">
+          <button class="icon-btn" id="more-btn" aria-label="更多">⋯</button>
+          <div class="more-menu" id="more-menu" hidden>
+            <button id="m-export">导出备份</button>
+            <button id="m-import">导入数据</button>
+            <button id="m-install" hidden>添加到主屏幕</button>
+            <button id="m-reset" class="danger">清空重置</button>
+          </div>
+        </div>
+        <div id="topbar-actions" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end"></div>
+      </div>
+    </header>
+    <main class="page" id="page"></main>
+  </div>
+
+  <!-- 底部标签栏（移动端） -->
+  <nav class="tabbar" id="tabbar">
+    <a class="tab-item" href="#/dashboard" data-route="dashboard">
+      <span class="tab-icon">◎</span><span>总览</span>
+    </a>
+    <a class="tab-item" href="#/plans" data-route="plans">
+      <span class="tab-icon">▲</span><span>计划</span>
+    </a>
+    <a class="tab-item" href="#/gear" data-route="gear">
+      <span class="tab-icon">⬢</span><span>装备</span>
+    </a>
+    <a class="tab-item" href="#/packing" data-route="packing">
+      <span class="tab-icon">▤</span><span>打包</span>
+    </a>
+  </nav>
+</div>
+
+<!-- 弹窗容器 -->
+<div class="modal-root" id="modal-root" hidden>
+  <div class="modal-mask" data-close="1"></div>
+  <div class="modal-panel" id="modal-panel">
+    <div class="modal-head">
+      <h3 id="modal-title">标题</h3>
+      <button class="icon-btn" id="modal-close" aria-label="关闭">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-foot" id="modal-foot"></div>
+  </div>
+</div>
+
+<div class="toast-root" id="toast-root"></div>
+
+<script src="js/store.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/plans.js"></script>
+<script src="js/gear.js"></script>
+<script src="js/packing.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
