@@ -43,10 +43,44 @@
     return ROUTES[h] ? h : 'dashboard';
   }
 
+  /* ---------- 外观设置：是否显示页面标题栏 ---------- */
+  var SETTINGS_KEY = 'hiking-app:settings';
+  var settings = (function () {
+    var def = { showTitle: false };            // 默认隐藏，手机上更沉浸
+    try {
+      var raw = global.localStorage.getItem(SETTINGS_KEY);
+      return Object.assign(def, raw ? JSON.parse(raw) : {});
+    } catch (e) { return def; }
+  })();
+
+  function saveSettings() {
+    try { global.localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); } catch (e) {}
+  }
+
+  function applySettings() {
+    var t = document.getElementById('page-title');
+    var bar = document.querySelector('.topbar');
+    var label = settings.showTitle ? '隐藏标题栏' : '显示标题栏';
+    if (t) { t.hidden = !settings.showTitle; }
+    if (bar) { bar.classList.toggle('compact', !settings.showTitle); }
+    ['btn-title', 'm-title'].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.textContent = label;
+    });
+  }
+
+  function toggleTitle() {
+    settings.showTitle = !settings.showTitle;
+    saveSettings();
+    applySettings();
+    UI.toast(settings.showTitle ? '已显示标题栏' : '已隐藏标题栏');
+  }
+
   function renderRoute() {
     var key = currentRoute();
     var route = ROUTES[key];
     document.getElementById('page-title').textContent = route.title;
+    applySettings();
     [].forEach.call(document.querySelectorAll('[data-route]'), function (a) {
       a.classList.toggle('active', a.dataset.route === key);
     });
@@ -131,6 +165,7 @@
     document.getElementById('m-export').addEventListener('click', function () { menu.hidden = true; doExport(); });
     document.getElementById('m-import').addEventListener('click', function () { menu.hidden = true; doImportPick(); });
     document.getElementById('m-reset').addEventListener('click', function () { menu.hidden = true; doReset(); });
+    document.getElementById('m-title').addEventListener('click', function () { menu.hidden = true; toggleTitle(); });
 
     var installBtn = document.getElementById('m-install');
     window.addEventListener('beforeinstallprompt', function (e) {
@@ -203,6 +238,7 @@
   document.getElementById('btn-export').addEventListener('click', doExport);
   document.getElementById('btn-import').addEventListener('click', doImportPick);
   document.getElementById('btn-reset').addEventListener('click', doReset);
+  document.getElementById('btn-title').addEventListener('click', toggleTitle);
   registerSW();
   renderRoute();
 })(window);
