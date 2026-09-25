@@ -1,5 +1,5 @@
 /* ===== Service Worker：离线缓存 ===== */
-var CACHE = 'hiker-cache-v4';   // 改版本号即可让已安装的手机端拉取新资源
+var CACHE = 'hiker-cache-v5';   // 改版本号即可让已安装的手机端拉取新资源
 var ASSETS = [
   './',
   './index.html',
