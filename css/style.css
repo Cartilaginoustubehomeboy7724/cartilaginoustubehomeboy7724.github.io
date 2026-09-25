@@ -23,6 +23,9 @@
 }
 
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+/* 全局保险：凡是用 hidden 属性隐藏的元素，任何 CSS display 都不允许把它显示出来
+   （此前 .modal-root / .more-menu 的 display:flex 覆盖了 hidden，导致遮罩和菜单关不掉） */
+[hidden] { display: none !important; }
 html, body { height: 100%; }
 body {
   margin: 0;
