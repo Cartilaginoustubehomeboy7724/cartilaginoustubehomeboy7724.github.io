@@ -297,6 +297,8 @@ input, select, textarea, button { font-family: inherit; font-size: inherit; }
 
 /* ---------- 弹窗（移动端为底部抽屉） ---------- */
 .modal-root { position: fixed; inset: 0; z-index: 60; display: flex; align-items: flex-end; justify-content: center; }
+/* 关键：hidden 属性必须赢过上面的 display，否则弹窗层永远可见、挡住整页 */
+.modal-root[hidden] { display: none !important; }
 .modal-mask { position: absolute; inset: 0; background: rgba(24, 33, 27, .38); backdrop-filter: blur(2px); animation: fade .18s ease; }
 .modal-panel {
   position: relative; width: 540px; max-width: 100%; max-height: 90vh;
